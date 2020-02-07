@@ -71,6 +71,11 @@ export default {
    methods: {
      handle(index){
        this.current = index
+      //  做一个判断，判断是否为机票页面，是的话就跳转
+      if(this.options[index].name === '机票'){
+        this.$router.push(this.options[index].pageUrl)
+      }
+       
      }
    }
 }
