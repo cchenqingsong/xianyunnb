@@ -16,8 +16,11 @@
             </el-row>
             <!-- 登录/用户信息 -->
             <el-row type="flex" align="middle">
-                <nuxt-link to="/user/login" class="account-link" >
+                <nuxt-link to="/user/login" class="account-link" v-if="!$store.state.user.userInfo.token">
                     登录 / 注册 
+                </nuxt-link>
+                <nuxt-link to="/user/login" class="account-link" v-if="$store.state.user.userInfo.token">
+                    {{$store.state.user.userInfo.user.nickname }}
                 </nuxt-link>
             </el-row>
         </el-row>
