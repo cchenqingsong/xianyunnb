@@ -75,7 +75,6 @@ export default {
       if(this.options[index].name === '机票'){
         this.$router.push(this.options[index].pageUrl)
       }
-       
      }
    }
 }
