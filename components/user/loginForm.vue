@@ -50,14 +50,9 @@ export default {
             //    根据valid判断验证是否成功
                if(valid){
                     // 发送axios请求
-                    this.$axios({
-                    url:'/accounts/login',
-                    method:'POST',
-                    data:this.form
-                }).then(res=>{
-                    console.log(res)
-                    this.$store.commit('user/setUserInfo',res.data)
-                    console.log(this.$store.state.user.userInfo)
+                    this.$store.dispatch('user/login',this.form).then(()=>{
+                      this.$message.success('登入成功')
+                      this.$router.push('/')
                     })
                }
            })
