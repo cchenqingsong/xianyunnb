@@ -12,6 +12,7 @@ export const mutations = {
 
 // 异步的方式用action
 export const actions = {
+    // 登入
      login(store,data) {
         return this.$axios({
             url: '/accounts/login',
@@ -20,5 +21,13 @@ export const actions = {
         }).then(res => {
             store.commit('setUserInfo', res.data)
         })
-    }
+    },
+    // 获取验证码
+     captcha(store,data){
+         return this.$axios({
+                    url:'/captchas',
+                    method:'POST',
+                    data:{ tel: data }
+                })
+     }
 }

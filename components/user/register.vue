@@ -15,10 +15,10 @@
     <el-form-item class="form-item" prop="nickname">
       <el-input placeholder="你的名字" v-model="form.nickname"> </el-input>
     </el-form-item>
-    <el-form-item class="form-item" prop="password">
+    <el-form-item class="form-item" prop="password" >
       <el-input placeholder="密码" type="password" v-model="form.password"></el-input>
     </el-form-item>
-    <el-form-item class="form-item" prop="checkPassword">
+    <el-form-item class="form-item" prop="checkPassword" >
       <el-input placeholder="确认密码" type="password" v-model="form.checkPassword"> </el-input>
     </el-form-item>
     <el-button class="submit" type="primary" @click="handleRegSubmit">
@@ -29,6 +29,34 @@
 <script>
 export default {
   data() {
+      var validateName =(rule, value, callback)=>{
+          if(value === ''){
+              callback(new Error('请输入用户名'))
+          }else if(/^1[3-9][0-9]{9}$/.test(value) == false){
+            callback(new Error('请输入正确的用户名'))
+          }else{
+              callback()
+          }
+      };
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.form.checkPassword !== '') {
+            this.$refs.form.validateField('checkPassword');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.form.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
     return {
       // 表单数据
       form: {
@@ -40,18 +68,29 @@ export default {
       },
       // 表单规则
       rules: {
-          
+          username: [{ validator: validateName, trigger: 'blur' }],
+          captcha: [{ required: true, message: '请输入你的名字', trigger: 'blur' }],
+          nickname: [{ required: true, message: '请输入你的名字', trigger: 'blur' }],
+          password: [{ validator: validatePass, trigger: 'blur' }],
+          checkPassword : [{ validator: validatePass2, trigger: 'blur' }]
       }
     };
   },
   methods: {
     // 发送验证码
-    handleSendCaptcha() {},
-
-    // 注册
-    handleRegSubmit() {}
-  }
-};
+    handleSendCaptcha() {
+        this.$store.dispatch('user/captcha',this.form.username).then(res=>{
+            console.log(res)
+            this.$message.success('模拟的验证码是' + res.data.code)
+        })
+    },
+     // 注册
+    handleRegSubmit() {
+         
+    }
+   
+    }
+}
 </script>
 
 <style scoped lang="less">
