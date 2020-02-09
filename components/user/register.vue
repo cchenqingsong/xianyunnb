@@ -60,16 +60,16 @@ export default {
     return {
       // 表单数据
       form: {
-          username: '',
+          username: '13555555550',
           captcha: '',
-          nickname: '',
-          password: '',
-          checkPassword: ''
+          nickname: '666',
+          password: '888',
+          checkPassword: '888'
       },
       // 表单规则
       rules: {
           username: [{ validator: validateName, trigger: 'blur' }],
-          captcha: [{ required: true, message: '请输入你的名字', trigger: 'blur' }],
+          captcha: [{ required: true, message: '请输入正确的验证码', trigger: 'blur' }],
           nickname: [{ required: true, message: '请输入你的名字', trigger: 'blur' }],
           password: [{ validator: validatePass, trigger: 'blur' }],
           checkPassword : [{ validator: validatePass2, trigger: 'blur' }]
@@ -80,13 +80,23 @@ export default {
     // 发送验证码
     handleSendCaptcha() {
         this.$store.dispatch('user/captcha',this.form.username).then(res=>{
-            console.log(res)
+            // console.log(res)
             this.$message.success('模拟的验证码是' + res.data.code)
         })
     },
      // 注册
     handleRegSubmit() {
-         
+         this.$refs['form'].validate(res=>{
+             if(res){
+                //  发送axios请求实现注册
+                // 对form的数据按照请求api要的数据格式进行改造
+                let { checkPassword , ...data } = this.form 
+                this.$store.dispatch('user/register',data).then(res=>{
+                    this.$message.success('注册成功')
+                    this.$router.push('/')
+                })
+             }
+         })
     }
    
     }
