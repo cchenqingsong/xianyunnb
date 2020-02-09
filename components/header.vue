@@ -45,7 +45,11 @@
 <script>
 export default {
     methods: {
-        handleLogout(){}
+        handleLogout(){
+            this.$store.commit('user/setUserInfo',{token:'',user:{}})
+            this.$message.success('注销成功')
+            this.$router.push('/')
+        }
     }
 }
 </script>
