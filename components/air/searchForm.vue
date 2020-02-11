@@ -78,7 +78,12 @@ export default {
     methods: {
         // tab切换时触发
         handleSearchTab(item, index){
-            
+            if(index === 1){
+                this.$alert('目前暂不支持往返，请使用单程选票！', '温馨提示', {
+                    confirmButtonText: '确定',
+                    type: 'warning'
+                })
+            }
         },
         // 出发城市输入框获得焦点时触发
         // value 是选中的值，cb是回调函数，接收要展示的列表
