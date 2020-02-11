@@ -40,5 +40,20 @@ export const actions = {
                     console.log(res)
                     store.commit('setUserInfo',res.data)
                 })
-     }
+     },
+    //  机票城市筛选
+    searchCity(store,data){
+        return  this.$axios({
+            url:'/airs/city',
+            params:{
+                name: data
+            }
+        }).then(res=>{
+                const newData = res.data.data.map(item=>{
+                        item.value = item.name.replace('市','')
+                        return item
+                })
+            return newData;
+        })
+    }
 }

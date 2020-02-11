@@ -91,29 +91,34 @@ export default {
             if(!value){
                 return;
             }
-            // 调用axios根据输入的城市获取城市的信息
-            this.$axios({
-                url:'/airs/city',
-                params:{
-                    name: this.form.departCity
-                }
-            }).then(res=>{
-                // 返回的数据没有所要的value：数据的格式，所以，数据改造
-                const newData = res.data.data.map(item=>{
-                        // replace方法将字符串里面的 ‘市’，替换为空，目标是去掉市
-                        item.value = item.name.replace('市','')
-                        return item
-                    })
-                // 将newData存起来
-                // this.departData = newData
+            // 封装筛选城市的方法在store里面
+            this.$store.dispatch('user/searchCity',this.form.departCity).then(res=>{
                 // console.log(res)
-                if(newData.length == 1){
-                    this.form.departCode = newData[0].sort
+                if(res.length == 1){
+                    this.form.departCode = res[0].sort
                 }
-                // 这个callback是组件自带的传参，目的是让获得的数据展示在下拉列表中
-                callback(newData);
+                callback(res)
             })
-            
+            // })
+            // // 调用axios根据输入的城市获取城市的信息
+            // this.$axios({
+            //     url:'/airs/city',
+            //     params:{
+            //         name: this.form.departCity
+            //     }
+            // }).then(res=>{
+            //     // 返回的数据没有所要的value：数据的格式，所以，数据改造
+            //     const newData = res.data.data.map(item=>{
+            //             // replace方法将字符串里面的 ‘市’，替换为空，目标是去掉市
+            //             item.value = item.name.replace('市','')
+            //             return item
+            //         })
+            //     if(newData.length == 1){
+            //         this.form.departCode = newData[0].sort
+            //     }
+            //     // 这个callback是组件自带的传参，目的是让获得的数据展示在下拉列表中
+            //     callback(newData);
+            // })
         },
         // 目标城市输入框获得焦点时触发
         // value 是选中的值，callback是回调函数，接收要展示的列表
@@ -122,26 +127,34 @@ export default {
             if(!value){
                 return;
             }
-            // 调用axios根据输入的城市获取城市的信息
-            this.$axios({
-                url:'/airs/city',
-                params:{
-                    name: this.form.destCity
+            // 封装筛选城市的方法在store里面
+            this.$store.dispatch('user/searchCity',this.form.destCity).then(res=>{
+                // console.log(res)
+                if(res.length == 1){
+                    this.form.destCode = res[0].sort
                 }
-            }).then(res=>{
-                // 返回的数据没有所要的value：数据的格式，所以，数据改造
-                const newData = res.data.data.map(item=>{
-                        item.value = item.name.replace('市','')
-                        return item
-                    })
-                // 将newData存起来
-                // this.destData = newData
-                if(newData.length == 1){
-                    this.form.destCode = newData[0].sort
-                }
-                // 这个callback是组件自带的传参，目的是让获得的数据展示在下拉列表中
-                callback(newData);
+                callback(res)
             })
+            // // 调用axios根据输入的城市获取城市的信息
+            // this.$axios({
+            //     url:'/airs/city',
+            //     params:{
+            //         name: this.form.destCity
+            //     }
+            // }).then(res=>{
+            //     // 返回的数据没有所要的value：数据的格式，所以，数据改造
+            //     const newData = res.data.data.map(item=>{
+            //             item.value = item.name.replace('市','')
+            //             return item
+            //         })
+            //     // 将newData存起来
+            //     // this.destData = newData
+            //     if(newData.length == 1){
+            //         this.form.destCode = newData[0].sort
+            //     }
+            //     // 这个callback是组件自带的传参，目的是让获得的数据展示在下拉列表中
+            //     callback(newData);
+            // })
         },
         // 出发城市下拉选择时触发
         handleDepartSelect(item) {
