@@ -146,7 +146,13 @@ export default {
         },
         // 触发和目标城市切换时触发
         handleReverse(){
-            
+            // 将数据全部结构出来
+            const {departCity,departCode,destCity,destCode} = this.form
+            // 重新赋值达到城市切换的效果
+            this.form.departCity = destCity
+            this.form.departCode = destCode
+            this.form.destCity = departCity
+            this.form.destCode = departCode
         },
         // 提交表单是触发
         handleSubmit(){
