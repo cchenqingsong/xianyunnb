@@ -17,6 +17,7 @@
                 :fetch-suggestions="queryDepartSearch"
                 placeholder="请搜索出发城市"
                 @select="handleDepartSelect"
+                @blur="handleDepartBlur"
                 class="el-autocomplete"
                 ></el-autocomplete>
             </el-form-item>
@@ -26,6 +27,7 @@
                 :fetch-suggestions="queryDestSearch"
                 placeholder="请搜索到达城市"
                 @select="handleDestSelect"
+                @blur="handleDestBlur"
                 class="el-autocomplete"
                 ></el-autocomplete>
             </el-form-item>
@@ -69,8 +71,8 @@ export default {
                 destCode:'',
                 departDate:'',
             },
-            departData :[],
-            destData:[]
+            // departData :[],
+            // destData:[]
         }
     },
     methods: {
@@ -98,7 +100,11 @@ export default {
                         return item
                     })
                 // 将newData存起来
-                this.departData = newData
+                // this.departData = newData
+                // console.log(res)
+                if(newData.length == 1){
+                    this.form.departCode = newData[0].sort
+                }
                 // 这个callback是组件自带的传参，目的是让获得的数据展示在下拉列表中
                 callback(newData);
             })
@@ -124,18 +130,31 @@ export default {
                         return item
                     })
                 // 将newData存起来
-                this.destData = newData
+                // this.destData = newData
+                if(newData.length == 1){
+                    this.form.destCode = newData[0].sort
+                }
                 // 这个callback是组件自带的传参，目的是让获得的数据展示在下拉列表中
                 callback(newData);
             })
         },
         // 出发城市下拉选择时触发
         handleDepartSelect(item) {
-            
+            // console.log(this.form.departCity)
+            // console.log(item)
+            this.form.departCode = item.sort
         },
         // 目标城市下拉选择时触发
         handleDestSelect(item) {
-            
+            this.form.destCode = item.sort
+        },
+        // 出发城市失去焦点时触发
+        handleDepartBlur(){
+            // 当用户直接输入全名时，不是点击了下拉框的数据，此时应补上数据departCode
+        },
+        // 出发城市失去焦点时触发
+        handleDestBlur(){
+            // 当用户直接输入全名时，不是点击了下拉框的数据，此时应补上数据departCode
         },
         // 确认选择日期时触发
         handleDate(value){
@@ -156,7 +175,24 @@ export default {
         },
         // 提交表单是触发
         handleSubmit(){
-           
+            if(!this.form.departCity){
+                this.$message.error("请输入出发城市");
+                return;
+            }
+            if(!this.form.destCity){
+                this.$message.error("请输入到达城市");
+                return;
+            }
+            if(!this.form.departDate){
+                this.$message.error("请选择时间");
+                return;
+            }
+        //    这里需要先跳转页面，传值
+            console.log(this.form)
+            this.$router.push({
+                path: "/air/flights",
+                query: this.form
+            })
         }
     },
     mounted() {
