@@ -14,9 +14,7 @@
                 
                 
                 <!-- 航班信息 -->
-                <div>
-                    
-                </div>
+                <flightsItem :data='dataList'/>
             </div>
 
             <!-- 侧边栏 -->
@@ -31,14 +29,15 @@
 
 import moment from "moment";
 import flightsListHead from '@/components/air/flightsListHead'
+import flightsItem from '@/components/air/flightsItem'
 export default {
     data(){
         return {
-            
+            dataList:{}
         }
     },
     components: {
-        flightsListHead
+        flightsListHead,flightsItem
     }
 }
 </script>
