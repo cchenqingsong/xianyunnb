@@ -13,11 +13,11 @@
                             <span>{{data.org_airport_name}}</span>
                         </el-col>
                         <el-col :span="8" class="flight-time">
-                            <span>2时20分</span>
+                            <span>{{rankTime}}</span>
                         </el-col>
                         <el-col :span="8" class="flight-airport">
                             <strong>{{data.arr_time}}</strong>
-                            <span>虹桥机场T2</span>
+                            <span>{{data.dst_airport_name}}</span>
                         </el-col>
                     </el-row>
                 </el-col>
@@ -55,7 +55,6 @@
 
 <script>
 export default {
-
     props: {
         // 数据
         data: {
@@ -66,6 +65,20 @@ export default {
     data () {
         return {
             isShow: true
+        }
+    },
+    computed: {
+        // 计算时间差
+        rankTime(){
+            const arr = this.data.arr_time.split(':')  // 20 30     22 50 
+            const dep = this.data.dep_time.split(':')
+            let  sub = arr[0]*60 + +arr[1]- dep[0]*60 - dep[1]
+            if(sub<0){
+                sub = sub + 24*60
+            }
+            const hour = Math.floor(sub/60)
+            const minute = sub%60
+            return  `${hour}小时${minute}分钟`
         }
     }
 }
