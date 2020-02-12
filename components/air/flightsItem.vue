@@ -1,32 +1,32 @@
 <template>
     <div class="flight-item">
-        <div>
+        <div @click="isShow = !isShow">
             <!-- 显示的机票信息 -->
             <el-row type="flex" align="middle" class="flight-info">
                 <el-col :span="6">
-                    <span>东航 </span> MU5316
+                    <span>{{data.airline_name}} </span> {{data.flight_no}}
                 </el-col>
                 <el-col :span="12">
                     <el-row type="flex" justify="space-between" class="flight-info-center">
                         <el-col :span="8" class="flight-airport">
-                            <strong>20:30</strong>
-                            <span>白云机场T1</span>
+                            <strong>{{data.dep_time}}</strong>
+                            <span>{{data.org_airport_name}}</span>
                         </el-col>
                         <el-col :span="8" class="flight-time">
                             <span>2时20分</span>
                         </el-col>
                         <el-col :span="8" class="flight-airport">
-                            <strong>22:50</strong>
+                            <strong>{{data.arr_time}}</strong>
                             <span>虹桥机场T2</span>
                         </el-col>
                     </el-row>
                 </el-col>
                 <el-col :span="6" class="flight-info-right">
-                    ￥<span class="sell-price">810</span>起
+                    ￥<span class="sell-price">{{data.base_price}}</span>起
                 </el-col>
             </el-row>
         </div>
-        <div class="flight-recommend">
+        <div class="flight-recommend" v-if="isShow">
             <!-- 隐藏的座位信息列表 -->
             <el-row type="flex"  justify="space-between" align="middle">
                 <el-col :span="4">低价推荐</el-col>
@@ -59,9 +59,13 @@ export default {
     props: {
         // 数据
         data: {
-            type: Object,
-            // 默认是空数组
-            default: {}
+            type: Object,  // 声明data属性的类型
+            default: {}   // 如果组件调用时候不传data，采用默认值
+        }
+    },
+    data () {
+        return {
+            isShow: true
         }
     }
 }

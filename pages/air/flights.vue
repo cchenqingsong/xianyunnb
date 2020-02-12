@@ -14,7 +14,7 @@
                 
                 
                 <!-- 航班信息 -->
-                <flightsItem :data='dataList'/>
+                <flightsItem v-for="(item,index) in flightsData" :key="index" :data='item'/>
             </div>
 
             <!-- 侧边栏 -->
@@ -33,11 +33,30 @@ import flightsItem from '@/components/air/flightsItem'
 export default {
     data(){
         return {
-            dataList:{}
+            // 机票总数据 （有info, flights, total, options这些属性）
+            flightsData: {},
+            // 当前页数
+            pageIndex: 1,
+            // 当前的条数
+            pageSize: 5,
+            // 总条数
+            total: 0
         }
     },
     components: {
         flightsListHead,flightsItem
+    },
+    mounted () {
+        // 获取服务器的数据
+        // console.log(this.$route.query)
+        this.$axios({
+            url: '/airs',
+            params: this.$route.query
+        }).then(res=>{
+            // console.log(res)
+            this.flightsData = res.data.flights
+            console.log(this.flightsData)
+        })
     }
 }
 </script>
