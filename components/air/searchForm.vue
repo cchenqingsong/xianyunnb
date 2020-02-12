@@ -89,6 +89,7 @@ export default {
         // value 是选中的值，cb是回调函数，接收要展示的列表
         queryDepartSearch(value, callback){
             if(!value){
+                callback([])
                 return;
             }
             // 封装筛选城市的方法在store里面
@@ -125,6 +126,7 @@ export default {
         queryDestSearch(value, callback){
                 // 目标城市一样的，和起始城市一样
             if(!value){
+                callback([])
                 return;
             }
             // 封装筛选城市的方法在store里面
