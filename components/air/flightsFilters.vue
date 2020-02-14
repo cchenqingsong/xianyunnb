@@ -20,7 +20,7 @@
                 <el-select size="mini" v-model="flightTimes"  placeholder="起飞时间" @change="handleFlightTimes">
                     <el-option v-for="(item,index) in data.options.flightTimes" :key="index"
                     :label="`${item.from}:00 - ${item.to}:00`"
-                    value="1"
+                    :value="`${item.from},${item.to}`"
                     >
                     </el-option>
                 </el-select>
@@ -53,6 +53,7 @@
                 撤销
     		</el-button>
         </div>
+        <span>{{filter}}</span>
     </div>
 </template>
 
@@ -78,31 +79,64 @@ export default {
             ]
         }
     },
+    computed:{
+        filter(){
+            let newData = this.data.flights.filter(item=>{
+                let judge = true
+                // 筛选起飞机场的数据
+                if( this.airport && item.org_airport_name !== this.airport){
+                    judge = false
+                }
+                // 筛选航空公司的数据
+                if( this.company && item.airline_name !== this.company){
+                    judge = false
+                }
+                // 筛选飞机大小的数据
+                if( this.airSize && item.plane_size !== this.airSize){
+                    judge = false
+                }
+                if(this.flightTimes){
+                    // 当前选中的时间段
+                    const airTime = this.flightTimes.split(',')
+                    // 要筛选的机票的时间段
+                    let hours = item.dep_time.split(':')[0]
+                    // 筛选出发时间
+                    if( +airTime[0] > hours || hours >= +airTime[1] ){
+                        judge = false
+                    }
+                }
+                
+                return judge
+            })
+            this.$emit('newData',newData)
+            // console.log(newData)
+            return ''
+        }
+    },
     methods: {
         // 选择机场时候触发
         handleAirport(value){
-            
+            // this.$emit('sendAirportNameData',value)
         },
 
         // 选择出发时间时候触发
         handleFlightTimes(value){
-            
-        },
+            // this.$emit('sendTimeData',value)
+        }, 
 
          // 选择航空公司时候触发
         handleCompany(value){
-            // console.log(value)
-            this.$emit('sendCompanyData',value)
+            // this.$emit('sendCompanyData',value)
         },
 
          // 选择机型时候触发
         handleAirSize(value){
-           
+        //    this.$emit('sendPlaneSizeData',value)
         },
         
         // 撤销条件时候触发
         handleFiltersCancel(){
-            
+            this.$emit('sendBack',{})
         },
     }
 }
