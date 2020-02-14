@@ -5,9 +5,7 @@
             <!-- 顶部过滤列表 -->
             <div class="flights-content">
                 <!-- 过滤条件 -->
-                <div>
-                    
-                </div>
+                <flightsFilters :data='flightsData' @sendCompanyData = 'getCompanyData' />
                 
                 <!-- 航班头部布局 -->
                 <flightsListHead/>
@@ -44,14 +42,18 @@
 
 <script>
 
-import moment from "moment";
+import moment from "moment"
+import flightsFilters from '@/components/air/flightsFilters'
 import flightsListHead from '@/components/air/flightsListHead'
 import flightsItem from '@/components/air/flightsItem'
 export default {
     data(){
         return {
             // 机票数据,是一个对象
-            flightsData: {},
+            flightsData: {
+                info:{},
+                options:{}
+            },
             // 当前页数
             pageIndex: 1,
             // 当前的条数
@@ -61,7 +63,7 @@ export default {
         }
     },
     components: {
-        flightsListHead,flightsItem
+        flightsListHead,flightsItem,flightsFilters
     },
     methods: {
         // 切换条数
@@ -73,7 +75,7 @@ export default {
         // 默认参数value的值就是当前页数
         handleCurrentChange(value){
             this.pageIndex = value
-        }
+        },
     },
     computed: {
         // 计算属性，为了在前端实现数据的分页    
@@ -83,6 +85,7 @@ export default {
                 return [] ;
             }
             // 0-5   5-10  10-15    
+            // 通过自己切割数组，展示部分数据来达到分页的效果
             return this.flightsData.flights.slice((this.pageIndex-1)*this.pageSize,this.pageIndex*this.pageSize)
         }
     },
@@ -96,7 +99,7 @@ export default {
             // console.log(res)
             this.flightsData = res.data
             this.total = res.data.total
-            // console.log(this.flightsData)
+            console.log(this.flightsData)
         })
     }
 }
