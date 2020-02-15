@@ -84,12 +84,13 @@ export default {
     },
     methods: {
         submit(){
-            this.$axios({
-                url:`/airs/:id?${s}`,
-                params:{
-                    seat_xid:''
-                }
-            })
+            // this.$axios({
+            //     url:'/airs/:id?$',
+            //     params:{
+            //         seat_xid:''
+            //     }
+            // })
+            this.$router.push('order')
         }
     }
 }
