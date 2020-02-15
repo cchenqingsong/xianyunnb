@@ -8,7 +8,7 @@
 
             <!-- 侧边栏 -->
             <div class="aside">
-                
+                <orderAside/>
             </div>
         </el-row>
     </div>
@@ -16,9 +16,10 @@
 
 <script>
 import orderForm from '@/components/air/orderForm'
+import orderAside from '@/components/air/orderAside'
 export default {
     components: {
-        orderForm
+        orderForm,orderAside
     }
 }
 </script>

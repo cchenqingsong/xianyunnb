@@ -163,6 +163,7 @@ export default {
     beforeRouteUpdate (to, from, next) {
         console.log('守卫~~')
         next()
+        this.pageIndex = 1,
         this.getDateList()
     },
     mounted () {

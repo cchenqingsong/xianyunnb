@@ -42,7 +42,7 @@
                             <el-button 
                             type="warning" 
                             size="mini"
-                            @click='submit'>
+                            @click='submit(item)'>
                             选定
                             </el-button>
                             <p>剩余：{{item.discount}}</p>
@@ -83,14 +83,20 @@ export default {
         }
     },
     methods: {
-        submit(){
+        submit(item){
             // this.$axios({
             //     url:'/airs/:id?$',
             //     params:{
             //         seat_xid:''
             //     }
             // })
-            this.$router.push('order')
+            this.$router.push({
+                path:'/air/order',
+                query:{
+                    id: this.data.id,
+                    seat_xid: item.seat_xid
+                }
+            })
         }
     }
 }
