@@ -123,6 +123,11 @@ export default {
         // 发送手机验证码
         handleSendCaptcha(){
             // 之前有封装获取验证码的axios的请求，调用store的方法
+            // 简单的判断手机号码不能为空
+            if(this.form.contactPhone){
+                this.$message.error("手机号码不能为空")
+                return;
+            }
             this.$store.dispatch('user/captcha',this.form.contactPhone).then(res=>{
                 // console.log(res)
                 this.$message.success('模拟的验证码为'+res.data.code)
