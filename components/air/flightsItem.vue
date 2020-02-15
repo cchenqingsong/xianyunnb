@@ -41,7 +41,8 @@
                         <el-col :span="3" class="choose-button">
                             <el-button 
                             type="warning" 
-                            size="mini">
+                            size="mini"
+                            @click='submit'>
                             选定
                             </el-button>
                             <p>剩余：{{item.discount}}</p>
@@ -79,6 +80,16 @@ export default {
             const hour = Math.floor(sub/60)
             const minute = sub%60
             return  `${hour}小时${minute}分钟`
+        }
+    },
+    methods: {
+        submit(){
+            this.$axios({
+                url:`/airs/:id?${s}`,
+                params:{
+                    seat_xid:''
+                }
+            })
         }
     }
 }

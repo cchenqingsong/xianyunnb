@@ -207,7 +207,10 @@ export default {
                 this.$message.error("请选择时间");
                 return;
             }
-        //    这里需要先跳转页面，传值
+            // 在store里面储存搜索的5个数据
+            this.$store.commit('air/setHistory',this.form)
+            // console.log(this.$store.state.air.history)
+            // 这里需要先跳转页面，传值
             console.log(this.form)
             this.$router.push({
                 path: "/air/flights",
