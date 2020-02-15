@@ -161,9 +161,9 @@ export default {
         }
     },
     beforeRouteUpdate (to, from, next) {
-        this.getDateList()
-        console.log('111')
+        console.log('守卫~~')
         next()
+        this.getDateList()
     },
     mounted () {
         this.getDateList()
