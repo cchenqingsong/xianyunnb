@@ -52,7 +52,7 @@ export default {
                     // 发送axios请求
                     this.$store.dispatch('user/login',this.form).then(()=>{
                       this.$message.success('登入成功')
-                      this.$router.push('/')
+                      this.$router.replace(this.$route.query.returnUrl)
                     })
                }
            })
