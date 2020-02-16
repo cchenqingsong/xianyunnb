@@ -41,7 +41,7 @@
         </el-row>
         <el-row type="flex" justify="space-between" align="middle" class="info-bar">
             <span>应付总额：</span>
-            <span class="price">￥ </span>
+            <span class="price">￥ {{$store.state.air.price}}</span>
         </el-row>           
     </div>
 </template>
@@ -63,21 +63,17 @@ export default {
         rankTime(){
             // 数据还未请求回来
             if(!this.data.dep_time) return "";
-
             // 转化为分钟
             const dep = this.data.dep_time.split(":");
             const arr = this.data.arr_time.split(":");
             const depVal = dep[0] * 60 + +dep[1];
             const arrVal = arr[0] * 60 + +arr[1];
-
             // 到达时间相减得到分钟
             let dis = arrVal - depVal;
-
             // 如果是第二天凌晨时间段，需要加24小时
             if(dis < 0){
                 dis = arrVal + 24 * 60 - depVal;
             }
-
             // 得到相差时间
             return `${ Math.floor(dis / 60)}时${dis % 60}分`
         }

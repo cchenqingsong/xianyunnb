@@ -70,6 +70,7 @@
                 <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
             </div>
         </div>
+        <span>{{airPrice}}</span>
     </div>
 </template>
 
@@ -94,7 +95,33 @@ export default {
                 air: this.$route.query.id,
             },
             // 存贮当前机票的详细信息
-            infoData: {}
+            infoData: {
+                seat_infos:{},
+                insurances:[]
+            }
+        }
+    },
+    computed: {
+        airPrice(){
+            console.log('来吧宝贝')
+            // 开始算价格
+            let price = 0
+            // 成人票单价
+            price += this.infoData.seat_infos.org_settle_price
+            // 燃油机建费
+            price += this.infoData.airport_tax_audlet
+            // 保险费用
+            // 对比后台给出的保险类型，去动态绑定的保险数组中找到相同的id，来判断是否购买了保险的逻辑
+            this.infoData.insurances.forEach(value=>{
+                if(this.form.insurances.indexOf(value.id) > -1){
+                    price += value.price
+                }
+            })
+            // 如果有多个乘机人，
+            price *= this.form.users.length
+            // 将值存到store里面
+            this.$store.commit('air/price',price)
+            return price
         }
     },
     methods: {
@@ -220,6 +247,7 @@ export default {
             this.infoData = res.data
             this.$store.commit('air/setPlaneData',{...res.data})
         })
+        console.log(this.infoData.insurances)
     }
 }
 </script>
