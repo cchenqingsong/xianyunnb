@@ -218,6 +218,7 @@ export default {
         }).then(res=>{
             console.log(res.data)
             this.infoData = res.data
+            this.$store.commit('air/setPlaneData',{...res.data})
         })
     }
 }

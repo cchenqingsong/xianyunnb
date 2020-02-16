@@ -8,7 +8,7 @@
 
             <!-- 侧边栏 -->
             <div class="aside">
-                <orderAside :data='{}'/>
+                <orderAside :data='$store.state.air.planeData'/>
             </div>
         </el-row>
     </div>

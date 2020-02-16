@@ -52,11 +52,13 @@ export default {
         data: {
             type: Object,
             default: {
-                
+                seat_infos:{}
             }
         }
     },
-
+    mounted () {
+        console.log(this.data)
+    },
     computed: {
         rankTime(){
             // 数据还未请求回来
