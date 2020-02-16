@@ -8,7 +8,7 @@
 
             <!-- 侧边栏 -->
             <div class="aside">
-                <orderAside/>
+                <orderAside :data='{}'/>
             </div>
         </el-row>
     </div>

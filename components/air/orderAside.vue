@@ -2,8 +2,8 @@
     <div class="aside">
         <div class="air-info">
             <el-row type="flex" justify="space-between" class="info-top">
-                <div></div>
-                <div> - </div>
+                <div>{{data.dep_date}}</div>
+                <div>{{data.org_city_name}} - {{data.dst_city_name}}</div>
             </el-row>    
             <el-row 
             type="flex" 
@@ -11,15 +11,15 @@
             align="middle" 
             class="info-step">
                 <el-col :span="5" class="flight-airport">
-                    <strong></strong>
-                    <span></span>
+                    <strong>{{data.dep_time}}</strong>
+                    <span>{{data.org_airport_name}}{{data.org_airport_quay}}</span>
                 </el-col>
                 <el-col :span="14" class="flight-time">
-                    <span>---  ---</span>
-                    <span></span>
+                    <span>--- {{rankTime}} ---</span>
+                    <span>{{data.airline_name}}{{data.flight_no}}</span>
                 </el-col>
                 <el-col :span="5" class="flight-airport">
-                    <strong></strong>
+                    <strong>{{data.arr_time}}</strong>
                     <span>浦东机场T2</span>
                 </el-col>
             </el-row> 
@@ -31,12 +31,12 @@
         </el-row>
         <el-row type="flex" justify="space-between" class="info-bar">
             <span>成人机票</span>
-            <span>￥</span>
+            <span>￥{{data.seat_infos.org_settle_price}}</span>
             <span>x1</span>
         </el-row>
         <el-row type="flex" justify="space-between" class="info-bar">
             <span>机建＋燃油</span>
-            <span>¥/人/单程</span>
+            <span>¥{{data.airport_tax_audlet}}/人/单程</span>
             <span>x1</span>
         </el-row>
         <el-row type="flex" justify="space-between" align="middle" class="info-bar">
@@ -48,12 +48,14 @@
 
 <script>
 export default {
-    // props: {
-    //     data: {
-    //         type: Object,
-    //         default: {}
-    //     }
-    // },
+    props: {
+        data: {
+            type: Object,
+            default: {
+                
+            }
+        }
+    },
 
     computed: {
         rankTime(){

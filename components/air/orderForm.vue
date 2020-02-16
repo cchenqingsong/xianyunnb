@@ -204,6 +204,7 @@ export default {
                 }
             }).then(res=>{
                 console.log(res)
+                this.$message.success('提交订单成功')
             })
         
         }
