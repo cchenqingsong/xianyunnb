@@ -121,7 +121,7 @@ export default {
             price *= this.form.users.length
             // 将值存到store里面
             this.$store.commit('air/price',price)
-            return price
+            return ''
         }
     },
     methods: {
@@ -232,6 +232,10 @@ export default {
             }).then(res=>{
                 console.log(res)
                 this.$message.success('提交订单成功')
+                this.$router.push({
+                    path: '/air/pay',
+                    query: {id:res.data.data.id}
+                })
             })
         
         }
